@@ -13,20 +13,43 @@ app.get("/", (_, res) => res.render("home"));
 const httpServer = http.createServer(app);
 const wsServer = SocketIO(httpServer);
 
+function publicRooms() {
+  const {
+    sockets: {
+      adapter: {sids, rooms}
+    }
+  } = wsServer
+  const publicRooms = [];
+  rooms.forEach((_, key) => {
+    if(sids.get(key) === undefined) {
+      publicRooms.push(key);
+    }
+  });
+  return publicRooms
+}
+
 wsServer.on("connection", (socket) => {
   socket["nickname"] = "익명"
   socket.onAny((event) => {
+    console.log(wsServer.sockets.adapter);
     console.log(`Socket Event:${event}`);
   })
   socket.on("enter_room", (roomName, showRoom) => {
     socket.join(roomName);
     showRoom();
     socket.to(roomName).emit("welcome", socket.nickname);
+    wsServer.sockets.emit("room_change", publicRooms());
   });
+  
   socket.on("disconnecting", () => {
     socket.rooms.forEach((room) => {
       socket.to(room).emit("bye", socket.nickname);
     });
+    wsServer.sockets.emit("room_change", publicRooms());
+  });
+
+  socket.on("disconnect", () => {
+    wsServer.sockets.emit("room_change", publicRooms());
   });
 
   socket.on("message", (msg, room, done) => {
