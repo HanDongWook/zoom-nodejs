@@ -9,5 +9,18 @@ html(lang="en")
         header 
             h1 Doom
         main
-            h2 Welcome to Doom
+            div#welcome
+                form
+                    input(placeholder="room name", reuiqred, type="text")
+                    button Enter Room
+            div#room
+                h3
+                ul
+                form#name
+                    input(placeholder="nickname", reuiqred, type="text")
+                    button Save
+                form#msg
+                    input(placeholder="message", reuiqred, type="text")
+                    button Send
+        script(src="/socket.io/socket.io.js")
         script(src="/public/js/app.js")
