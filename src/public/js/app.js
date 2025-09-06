@@ -55,11 +55,19 @@ function handleRoomSubmit(event) {
 
 form.addEventListener("submit", handleRoomSubmit);
 
-socket.on("welcome", (user) => {
+function setRoomName(roomName, userCount) {
+    const h3 = room.querySelector("h3");
+    h3.innerText = `Room ${roomName} (${userCount})`;
+}
+
+socket.on("welcome", (user, userCount) => {
+    setRoomName(roomName, userCount);
     addMessage(`${user}님이 방에 들어왔습니다.`);
 })
 
-socket.on("bye", (user) => {
+
+socket.on("bye", (user, userCount) => {
+    setRoomName(roomName, userCount);
     addMessage(`"${user}"님이 방을 나갔습니다.`);
 })
 
