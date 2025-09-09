@@ -12,10 +12,11 @@ html(lang="en")
         main
             h2 Video
             div#myStream
-                video#myFace(autoplay,playsinline, muted, width="400", height="400")
+                video#myFace(autoplay, playsinline, width="400", height="400")
                 div.button-container
                     button#mute Mute
                     button#camera Turn Camera Off
+                select#cameras
             h2 Chatting
             div#welcome
                 form
