@@ -5,6 +5,7 @@ html(lang="en")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
         title Document
         link(rel="stylesheet", href="https://unpkg.com/mvp.css")
+        link(rel="stylesheet", href="/public/css/app.css")
     body 
         header 
             h1 Doom
@@ -17,7 +18,9 @@ html(lang="en")
                 ul
             div#room
                 h3
-                ul
+                div#chat
+                    h3
+                    ul
                 form#name
                     input(placeholder="nickname", reuiqred, type="text")
                     button Save

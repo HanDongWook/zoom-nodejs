@@ -1,0 +1,34 @@
+#room {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* 화면 전체 높이 사용 예시 */
+}
+
+#chat { /* chat div를 스크롤 가능하게 만듭니다 */
+  flex-grow: 1;
+  overflow-y: auto;
+  display: flex; /* chat div도 flex 컨테이너로 만듭니다. */
+  flex-direction: column; /* chat div 내부 요소들을 세로로 정렬 */
+}
+
+#chat ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  /* --- ADD THESE PROPERTIES --- */
+  display: flex; /* Make ul a flex container */
+  flex-direction: column; /* Stack list items vertically */
+}
+
+#chat ul li {
+  align-self: flex-start;
+}
+
+#chat ul li.me {
+  align-self: flex-end;
+}
+
+#room form#name,
+#room form#msg {
+  flex-shrink: 0;
+}
