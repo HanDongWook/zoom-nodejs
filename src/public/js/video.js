@@ -85,26 +85,32 @@ function handleCameraClick() {
 }
 
 async function handleCameraChange() {
-  await getMedia(camerasSelect.value);
+    await getMedia(camerasSelect.value);
 }
 
 muteBtn.addEventListener("click", handleMuteClick);
 cameraBtn.addEventListener("click", handleCameraClick);
 camerasSelect.addEventListener("input", handleCameraChange);
 
-async function startMedia() {
-  videoWelcome.hidden = true;
-  call.hidden = false;
-  await getMedia();
-  makeConnection();
+async function initCall() {
+    await getMedia();
+
+    if (myStream) {
+        videoWelcome.hidden = true;
+        call.hidden = false;
+        makeConnection();
+    } else {
+        alert("카메라 또는 마이크 접근에 실패했습니다. 권한을 허용했는지 확인해주세요.");
+    }
 }
 
-function handleWelcomeSubmit(event) {
-  event.preventDefault();
-  const input = welcomeForm.querySelector("input");
-  socket.emit("join_video_room", input.value, startMedia);
-  videoRoomName = input.value;
-  input.value = "";
+async function handleWelcomeSubmit(event) {
+    event.preventDefault();
+    const input = welcomeForm.querySelector("input");
+    await initCall();
+    socket.emit("join_video_room", input.value);
+    videoRoomName = input.value;
+    input.value = "";
 }
 
 welcomeForm.addEventListener("submit", handleWelcomeSubmit);
@@ -112,21 +118,28 @@ welcomeForm.addEventListener("submit", handleWelcomeSubmit);
 // Socket Code
 
 socket.on("welcome", async () => {
-  const offer = await myPeerConnection.createOffer();
-  myPeerConnection.setLocalDescription(offer);
-  console.log("sent the offer");
-  socket.emit("offer", offer, roomName);
+    const offer = await myPeerConnection.createOffer();
+    myPeerConnection.setLocalDescription(offer);
+    console.log("sent the offer");
+    socket.emit("offer", offer, roomName);
 });
 
-socket.on("offer", (offer) => {
-  console.log(offer);
+
+socket.on("offer", async (offer) => {
+    myPeerConnection.setRemoteDescription(offer);
+    const answer = await myPeerConnection.createAnswer();
+    myPeerConnection.setLocalDescription(answer);
+    socket.emit("answer", answer, roomName);
+});
+
+socket.on("answer", (answer) => {
+    myPeerConnection.setRemoteDescription(answer);
 });
 
 // RTC Code
 
 function makeConnection() {
-  myPeerConnection = new RTCPeerConnection();
-  myStream
-    .getTracks()
-    .forEach((track) => myPeerConnection.addTrack(track, myStream));
+    myPeerConnection = new RTCPeerConnection();
+    myStream.getTracks()
+        .forEach((track) => myPeerConnection.addTrack(track, myStream));
 }
