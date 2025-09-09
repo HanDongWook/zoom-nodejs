@@ -32,3 +32,31 @@
 #room form#msg {
   flex-shrink: 0;
 }
+
+#myStream {
+  display: flex;         
+  justify-content: center;
+  align-items: center; 
+  flex-direction: column;
+}
+
+#myStream video {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.button-container {
+  display: flex; 
+  justify-content: center; 
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.button-container button {
+  padding: 8px 15px;
+}
+
+#myStream button {
+  margin-top: 10px;
+}

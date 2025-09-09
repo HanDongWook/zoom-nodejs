@@ -10,6 +10,13 @@ html(lang="en")
         header 
             h1 Doom
         main
+            h2 Video
+            div#myStream
+                video#myFace(autoplay,playsinline, muted, width="400", height="400")
+                div.button-container
+                    button#mute Mute
+                    button#camera Turn Camera Off
+            h2 Chatting
             div#welcome
                 form
                     input(placeholder="room name", reuiqred, type="text")
@@ -28,4 +35,5 @@ html(lang="en")
                     input(placeholder="message", reuiqred, type="text")
                     button Send
         script(src="/socket.io/socket.io.js")
-        script(src="/public/js/app.js")
+        script(src="/public/js/chat.js")
+        script(src="/public/js/video.js")
