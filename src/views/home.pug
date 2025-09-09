@@ -11,20 +11,25 @@ html(lang="en")
             h1 Doom
         main
             h2 Video
-            div#myStream
-                video#myFace(autoplay, playsinline, width="400", height="400")
-                div.button-container
-                    button#mute Mute
-                    button#camera Turn Camera Off
-                select#cameras
+            div#videoWelcome
+                form    
+                    input(placeholder="video room name", required, type="text")
+                    button Enter room
+            div#call
+                div#myStream
+                    video#myFace(autoplay, playsinline, width="400", height="400")
+                    div.button-container
+                        button#mute Mute
+                        button#camera Turn Camera Off
+                    select#cameras
             h2 Chatting
-            div#welcome
+            div#chatWelcome
                 form
-                    input(placeholder="room name", reuiqred, type="text")
+                    input(placeholder="chat room name", reuiqred, type="text")
                     button Enter Room
                 h4 Open Rooms: 
                 ul
-            div#room
+            div#chatRoom
                 h3
                 div#chat
                     h3

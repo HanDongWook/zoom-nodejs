@@ -70,8 +70,15 @@ wsServer.on("connection", (socket) => {
     socket.to(room).emit("message", `${socket.nickname}: ${msg}`);
     done();
   });
+
   socket.on("nickname", (nickname) => {
     socket["nickname"] = nickname
+  });
+
+  socket.on("join_video_room", (roomName, done) => {
+    socket.join(roomName);
+    done();
+    socket.to(roomName).emit("welcome");
   });
 })
 
