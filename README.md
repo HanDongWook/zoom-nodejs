@@ -9,9 +9,9 @@
 - Express.js: A web application framework for Node.js, used to handle HTTP requests and serve static files (like HTML, CSS, and JavaScript).
 - Node.js: The JavaScript runtime environment that executes the server-side code.
 - Socket.io: A library that enables real-time, bidirectional, and event-based communication between the server and the browser.
+  - @socket.io/admin-ui: An administrative UI for monitoring and managing a Socket.IO server.
 - Pug (formerly Jade): A template engine for Node.js, used to create the HTML structure (views).
 - mvp.css: A simple, classless CSS library used for basic styling.
-- @socket.io/admin-ui: An administrative UI for monitoring and managing a Socket.IO server.
 
 ## Preview
 <p>
